@@ -1,0 +1,62 @@
+/* design tokens */
+:root {
+  --bg: #FAFAF7;
+  --bg-2: #F3F2EC;
+  --ink: #14130F;
+  --ink-2: #2A2924;
+  --ink-3: #585650;
+  --ink-4: #8A867D;
+  --rule: #D9D6CC;
+  --rule-2: #E8E5DB;
+  --paper: #FFFFFF;
+  --topbar-bg: #14130F;
+  --topbar-ink: #EFEDE5;
+  --term-bg: #0B0A08;
+  --term-border: #2A2924;
+  --term-ink: #C9C5B8;
+  --accent: oklch(0.46 0.11 245);
+  --accent-soft: oklch(0.46 0.11 245 / .08);
+  --accent-ink: oklch(0.34 0.11 245);
+  --signal: oklch(0.58 0.17 28);
+  --signal-soft: oklch(0.58 0.17 28 / .12);
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --maxw: 1240px;
+  --pad: clamp(20px, 4vw, 56px);
+  --logo-filter: none;
+  --viz-grid: #E8E5DB;
+  --viz-axis: #8A867D;
+  --viz-row: #F3F2EC;
+  --viz-dim: #C7C4B8;
+  --viz-dim-spike: #D9D6CC;
+  color-scheme: light;
+}
+
+html.dark {
+  --bg: #1A1B20;
+  --bg-2: #24252C;
+  --ink: #F2EFE6;
+  --ink-2: #D4D1C7;
+  --ink-3: #9E9B91;
+  --ink-4: #6E6B62;
+  --rule: #353640;
+  --rule-2: #2A2B33;
+  --paper: #24252C;
+  --topbar-bg: #14151A;
+  --topbar-ink: #D4D1C7;
+  --term-bg: #101116;
+  --term-border: #2A2B33;
+  --term-ink: #C9C5B8;
+  --accent: oklch(0.78 0.13 250);
+  --accent-soft: oklch(0.78 0.13 250 / .14);
+  --accent-ink: oklch(0.86 0.11 250);
+  --signal: oklch(0.74 0.18 28);
+  --logo-filter: brightness(1.08) saturate(1.05);
+  --viz-grid: #363741;
+  --viz-axis: #9E9B91;
+  --viz-row: #2A2B33;
+  --viz-dim: #4A4B53;
+  --viz-dim-spike: #4A4B53;
+  color-scheme: dark;
+}

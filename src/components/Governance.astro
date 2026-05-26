@@ -1,0 +1,140 @@
+---
+import GovPerson from "./GovPerson.astro";
+
+// Council members. Add `orcid`, `scholar`, and/or `github` (full URLs) per person; only the
+// icons you provide a URL for are shown.
+type Member = {
+  name: string;
+  role: string;
+  orcid?: string;
+  scholar?: string;
+  github?: string;
+};
+const steering: Member[] = [
+  {
+    name: "Raul C. Sîmpetru",
+    role: "Founding member · FAU Erlangen-Nürnberg",
+    orcid: "https://orcid.org/0000-0003-0455-0168",
+    scholar: "https://scholar.google.com/citations?user=jAHFWF8AAAAJ",
+    github: "https://github.com/RaulSimpetru",
+  },
+  {
+    name: "Dr. Ricardo G. Molinari",
+    role: "Founding member · University of Campinas",
+    orcid: "https://orcid.org/0000-0002-1159-8568",
+    scholar: "https://scholar.google.com/citations?user=63EC2fYAAAAJ",
+    github: "https://github.com/molinaris",
+  },
+  {
+    name: "Prof. Renato N. Watanabe",
+    role: "Founding Member · Federal University of ABC",
+    orcid: "https://orcid.org/0000-0003-2872-6543",
+    scholar: "https://scholar.google.de/citations?user=2Eim5wEAAAAJ&",
+    github: "https://github.com/rnwatanabe",
+  },
+  {
+    name: "Prof. Leonardo A. Elias",
+    role: "Founding Member · University of Campinas",
+    orcid: "https://orcid.org/0000-0003-4488-3063",
+    scholar: "https://scholar.google.com.br/citations?user=a_E4McYAAAAJ",
+    github: "https://github.com/leoelias-unicamp",
+  },
+  {
+    name: "Prof. Alessandro Del Vecchio",
+    role: "Founding member · FAU Erlangen-Nürnberg",
+    orcid: "https://orcid.org/0000-0002-7118-5554",
+    scholar: "https://scholar.google.com/citations?user=iUM5z-YAAAAJ",
+    github: "https://github.com/alecsdelvecchio",
+  },
+];
+const maintainers: Member[] = [
+  {
+    name: "Raul C. Sîmpetru",
+    role: "Founding maintainer · FAU Erlangen-Nürnberg",
+    orcid: "https://orcid.org/0000-0003-0455-0168",
+    scholar: "https://scholar.google.com/citations?user=jAHFWF8AAAAJ",
+    github: "https://github.com/RaulSimpetru",
+  },
+  {
+    name: "Dr. Ricardo G. Molinari",
+    role: "Founding maintainer · University of Campinas",
+    orcid: "https://orcid.org/0000-0002-1159-8568",
+    scholar: "https://scholar.google.com/citations?user=63EC2fYAAAAJ",
+    github: "https://github.com/molinaris",
+  },
+  {
+    name: "Devon R. Rohlf",
+    role: "Maintainer · FAU Erlangen-Nürnberg",
+    orcid: "https://orcid.org/0000-0003-1601-0046",
+    scholar: "https://scholar.google.com/citations?user=i80ve9kAAAAJ",
+    github: "https://github.com/DRohlf",
+  },
+];
+---
+
+<section id="governance">
+  <div class="container">
+    <div class="section-head">
+      <div class="row">
+        <div>
+          <div class="eyebrow">Community governance</div>
+          <h2 class="display">Stewarded openly, guided scientifically.</h2>
+        </div>
+      </div>
+      <p class="lede">
+        MyoGen is governed through two complementary bodies that separate
+        scientific direction from operational maintenance. The goal is
+        transparent stewardship and long-term sustainability, not authority.
+      </p>
+    </div>
+
+    <div class="gov-grid">
+      <div class="gov-card">
+        <div class="role">Scientific Steering Council</div>
+        <h3>Scientific and strategic guidance.</h3>
+        <div class="gov-text">
+          <p>
+            The Council advises on physiological modelling assumptions,
+            validation standards, interpretation of simulator outputs, the
+            long-term scientific roadmap, and community relevance. It helps
+            ensure that MyoGen remains physiologically grounded, scientifically
+            credible, and useful to the wider neuromuscular modelling and EMG
+            communities.
+          </p>
+          <p>
+            Technical limitations should never shape the scientific direction;
+            instead, the Council guides technical development to meet the
+            community's scientific needs.
+          </p>
+        </div>
+        <div class="gov-people">
+          {steering.map((p) => <GovPerson {...p} />)}
+          <p class="gov-join">Open to new scientific advisors.</p>
+        </div>
+      </div>
+
+      <div class="gov-card">
+        <div class="role">Maintainer Council</div>
+        <h3>Operational development and stewardship.</h3>
+        <div class="gov-text">
+          <p>
+            The Maintainer Council is responsible for the operational
+            development of MyoGen: code review, issue triage, releases,
+            documentation, roadmap implementation, contributor onboarding, and
+            technical decision-making.
+          </p>
+          <p>
+            It implements that guidance with full autonomy over the how.
+            Priority goes to solutions that run on end-users' hardware for
+            baseline accessibility; HPC and cloud support is secondary,
+            considered where it enables large-scale use.
+          </p>
+        </div>
+        <div class="gov-people">
+          {maintainers.map((p) => <GovPerson {...p} />)}
+          <p class="gov-join">Open to new maintainers from sustained contributors.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

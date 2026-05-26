@@ -1,0 +1,71 @@
+---
+import "../styles/tokens.css";
+import "../styles/global.css";
+import logo from "../assets/myogen_logo.png";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "MyoGen · The unified electrophysiology simulator",
+  description = "MyoGen is a modular, NEURON-backed simulation toolkit for human neuromuscular activity and EMG generation.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base target="_blank" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href={logo.src} />
+
+    <!-- No-flash theme boot: set .dark BEFORE first paint -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const dark = stored
+            ? stored === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.classList.toggle("dark", dark);
+        } catch (_) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <!-- Live PyPI version (silent fallback to whatever is in the DOM) -->
+    <script is:inline>
+      (async () => {
+        try {
+          const r = await fetch("https://pypi.org/pypi/myogen/json", {
+            cache: "no-store",
+          });
+          if (!r.ok) return;
+          const j = await r.json();
+          const v = j?.info?.version;
+          if (!v || !/^\d/.test(v)) return;
+          const vTag = "v" + v;
+          document.querySelectorAll("[data-version-meta]").forEach((el) => {
+            el.textContent = vTag;
+          });
+          document.querySelectorAll("[data-version-banner]").forEach((el) => {
+            el.textContent = vTag + " released";
+          });
+        } catch (_) {}
+      })();
+    </script>
+  </body>
+</html>

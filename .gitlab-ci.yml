@@ -1,0 +1,21 @@
+# GitLab Pages deploy for this Astro (Bun) site.
+# Mirrors the GitHub Actions build: bun install + astro build (-> dist/),
+# then publish dist/ as the Pages artifact (must be named "public").
+pages:
+  image: oven/bun:1.3.11
+  stage: deploy
+  variables:
+    # namespace-in-path Pages serves this project under /oj98yqyk/myogen-website,
+    # so Astro must build with that base for assets/links to resolve.
+    PAGES_BASE: "/oj98yqyk/myogen-website"
+  script:
+    - bun install --frozen-lockfile
+    # Invoke Astro's real entry directly: on Linux, bun mis-resolves the
+    # node_modules/.bin/astro symlink ("Cannot find module ../dist/cli/index.js").
+    - bun node_modules/astro/bin/astro.mjs build
+    - rm -rf public && mv dist public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

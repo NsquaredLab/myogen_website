@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import RasterViz from "./RasterViz.jsx";
+import logo from "../assets/myogen_logo.png";
+---
+
+<!-- Hero section — ported verbatim from myogen-landing.html lines 627–677 --><!-- Do NOT add <style> or <script> here; all hero CSS lives in global.css -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Open-source · Modular · NEURON-backed</div>
+        <h1>
+          <Image
+            src={logo}
+            alt="MyoGen"
+            class="hero-logo"
+            width={280}
+            loading="eager"
+          />
+          <span class="it">An open electrophysiology simulator from descending drive to the electrode signal</span>
+        </h1>
+        <p class="hero-sub">
+          A closed-loop neuromuscular simulator that brings together descending
+          cortical drive, spinal circuitry, proprioceptive feedback from
+          spindles and Golgi tendon organs, Hill-type muscle dynamics, and
+          decomposable high-density surface or intramuscular EMG in a single
+          framework. Calibrated against human motor-unit discharge statistics.
+        </p>
+        <div class="hero-ctas">
+          <a
+            class="btn btn-primary"
+            href="https://nsquaredlab.github.io/MyoGen/"
+          >
+            Read the documentation <span class="arr">→</span>
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="https://github.com/NsquaredLab/MyoGen"
+          >
+            View on GitHub <span class="arr">↗</span>
+          </a>
+          <a
+            class="btn btn-ghost"
+            href="https://nsquaredlab.github.io/MyoGen/examples.html"
+            >Explore examples <span class="arr">↗</span></a
+          >
+        </div>
+
+        <div class="hero-meta">
+          <div class="item">
+            <span class="k">Version</span><span class="v"
+              ><a href="https://pypi.org/project/myogen/" data-version-meta
+                >v0.9.0</a
+              ></span>
+          </div>
+          <div class="item">
+            <span class="k">License</span><span class="v"
+              ><a href="https://www.gnu.org/licenses/agpl-3.0.html"
+                >AGPL-3.0</a
+              ></span>
+          </div>
+          <div class="item">
+            <span class="k">Language</span><span class="v">Python ≥ 3.12</span>
+          </div>
+          <div class="item">
+            <span class="k">Backend</span><span class="v"
+              >NEURON · Cython · Neo</span>
+          </div>
+          <div class="item">
+            <span class="k">DOI</span><span class="v"
+              ><a href="https://doi.org/10.64898/2026.01.01.697284"
+                >10.64898/2026.01.01.697284</a
+              ></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-card" id="hero-viz">
+        <div class="viz-hd">
+          <span class="lights"><i></i><i></i><i></i></span>
+          <span id="viz-title">surface_emg.simulate(channels=64)</span>
+        </div>
+        <div id="viz-mount" style="height:380px;position:relative">
+          <RasterViz client:load />
+        </div>
+        <div class="viz-ft">
+          <span id="viz-meta">fs = 2048 Hz · 8 channels</span>
+          <span id="viz-time">t = 0.00s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

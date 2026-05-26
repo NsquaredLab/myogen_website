@@ -1,0 +1,49 @@
+---
+
+---
+
+<section id="docs">
+  <div class="container">
+    <div class="docs-cta">
+      <div>
+        <div class="eyebrow">Get started</div>
+        <h2>Read the docs. Run an example. Cite the preprint.</h2>
+        <p>
+          The documentation walks through installation, the Neo Block data
+          model, and thirteen reproducible examples that progress from
+          recruitment thresholds to HD-sEMG simulation and NWB export.
+        </p>
+        <div class="ctas">
+          <a
+            class="btn btn-primary"
+            href="https://nsquaredlab.github.io/MyoGen/"
+          >
+            Open documentation <span class="arr">→</span>
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="https://github.com/NsquaredLab/MyoGen"
+          >
+            GitHub repository <span class="arr">↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="term" aria-hidden="true">
+        <div><span class="cm"># install</span></div>
+        <div><span class="pr">$</span> uv add myogen</div>
+        <div style="height:8px"></div>
+        <div><span class="cm"># build a surface-EMG model, then simulate</span></div>
+        <div><span class="pr">&gt;&gt;&gt;</span> from myogen import simulator</div>
+        <div><span class="pr">&gt;&gt;&gt;</span> emg = simulator.SurfaceEMG(</div>
+        <div><span class="pr">...</span>&nbsp;&nbsp;&nbsp;&nbsp;muscle_model=muscle,</div>
+        <div><span class="pr">...</span>&nbsp;&nbsp;&nbsp;&nbsp;electrode_arrays=[grid],</div>
+        <div><span class="pr">...</span>&nbsp;&nbsp;&nbsp;&nbsp;sampling_frequency__Hz=2048,</div>
+        <div><span class="pr">...</span> )</div>
+        <div><span class="pr">&gt;&gt;&gt;</span> emg.simulate_muaps()</div>
+        <div><span class="pr">&gt;&gt;&gt;</span> signals = emg.simulate_surface_emg(</div>
+        <div><span class="pr">...</span>&nbsp;&nbsp;&nbsp;&nbsp;spike_train__Block=spikes,</div>
+        <div><span class="pr">...</span> )</div>
+      </div>
+    </div>
+  </div>
+</section>

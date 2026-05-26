@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import PaperCard from "./PaperCard.astro";
+
+const papers = await getCollection("papers");
+const ordered = papers.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="literature">
+  <div class="container">
+    <div class="section-head">
+      <div class="row">
+        <div>
+          <div class="eyebrow">In the literature</div>
+          <h2 class="display">Papers using MyoGen.</h2>
+        </div>
+      </div>
+      <p class="lede">
+        Preprints and publications that build on MyoGen for EMG decomposition,
+        motor-control research, and neural-interface validation. New entries
+        welcome via pull request.
+      </p>
+    </div>
+
+    <div class="paper-grid">
+      <!-- Open contribution -->
+      <article class="paper-card add">
+        <div class="paper-thumb">
+          <div class="icon">+</div>
+        </div>
+        <div class="paper-body">
+          <span class="venue">Open contribution</span>
+          <h4>Your paper here?</h4>
+          <p>
+            Used MyoGen in your work? Open a pull request on GitHub to add it to
+            this list.
+          </p>
+          <a
+            class="doi"
+            href="https://github.com/NsquaredLab/MyoGen/issues/new?labels=publication"
+            >Submit on GitHub ↗</a
+          >
+        </div>
+      </article>
+
+      {
+        ordered.map((p) => (
+          <PaperCard
+            venue={p.data.venue}
+            title={p.data.title}
+            authors={p.data.authors}
+            doi={p.data.doi}
+            url={p.data.url}
+            figure={p.data.figure}
+            figureBg={p.data.figureBg}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import InProgressThumb from "./thumbs/InProgressThumb.astro";
+
+interface Props {
+  venue: string;
+  title: string;
+  authors: string;
+  doi?: string;
+  url: string;
+  figure?: ImageMetadata; // a real figure; when absent, an "in progress" placeholder shows
+  figureBg?: string; // CSS colour behind the figure ("transparent" = none); omit = default mat
+}
+
+const { venue, title, authors, doi, url, figure, figureBg } = Astro.props;
+const thumbStyle = figureBg ? `background: ${figureBg}` : undefined;
+// Link always points to `url`; label is the DOI when present, else a sensible fallback.
+const linkLabel = doi
+  ? `doi:${doi}`
+  : url.includes("github.com")
+    ? "GitHub"
+    : "View";
+---
+
+<article class="paper-card">
+  <div class="paper-thumb" style={thumbStyle}>
+    {figure ? <Image src={figure} alt={title} width={760} /> : <InProgressThumb />}
+  </div>
+  <div class="paper-body">
+    <span class="venue">{venue}</span>
+    <h4>{title}</h4>
+    <p class="authors">{authors}</p>
+    <a class="doi" href={url}>{linkLabel} ↗</a>
+  </div>
+</article>

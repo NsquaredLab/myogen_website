@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/myogen_logo.png";
+const base = import.meta.env.BASE_URL;
+---
+
+<nav class="site">
+  <div class="container">
+    <a href={base} class="brand">
+      <span class="mark"
+        ><Image src={logo} alt="MyoGen logo" width={80} loading="eager" /></span
+      >MyoGen
+    </a>
+    <div class="nav-links">
+      <a target="_self" href="#overview">Overview</a>
+      <a target="_self" href="#validation">Results</a>
+      <a target="_self" href="#literature">Papers</a>
+      <a target="_self" href="#governance">Governance</a>
+      <a target="_self" href="#citation">Citation</a>
+      <a class="nav-keep" href="https://github.com/NsquaredLab/MyoGen"
+        >GitHub ↗</a
+      >
+      <a class="cta nav-keep" href="https://nsquaredlab.github.io/MyoGen/"
+        >Read docs →</a
+      >
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-toggle"
+        aria-label="Toggle dark mode"
+      >
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  // Reveal-on-scroll (ported from source ~lines 1340-1347)
+  (() => {
+    const nav = document.querySelector("nav.site");
+    if (!nav) return;
+    const update = () => nav.classList.toggle("shown", window.scrollY > 120);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+  })();
+</script>
+
+<script is:inline>
+  // Dark-mode toggle (new; replaces the removed Tweaks panel control)
+  (() => {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    const sync = () =>
+      btn.setAttribute(
+        "aria-pressed",
+        String(document.documentElement.classList.contains("dark")),
+      );
+    btn.addEventListener("click", () => {
+      const dark = !document.documentElement.classList.contains("dark");
+      document.documentElement.classList.toggle("dark", dark);
+      try {
+        localStorage.setItem("theme", dark ? "dark" : "light");
+      } catch (_) {}
+      sync();
+    });
+    sync();
+  })();
+</script>

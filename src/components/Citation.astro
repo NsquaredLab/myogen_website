@@ -1,0 +1,199 @@
+---
+const articleBib = `@article{simpetru_molinari_2026_myogen,
+  title   = {MyoGen: Unified Biophysical Modeling
+             of Human Neuromotor Activity and
+             Resulting Signals},
+  author  = {Sîmpetru, Raul C. and Molinari,
+             Ricardo G. and Rohlf, Devon R. and
+             Batichotti, Rebeka L. and Watanabe,
+             Renato N. and Elias, Leonardo A. and
+             Del Vecchio, Alessandro},
+  journal = {bioRxiv},
+  note    = {preprint},
+  year    = {2026},
+  doi     = {10.64898/2026.01.01.697284}
+}`;
+
+const softwareBib = `@software{myogen_software_2026,
+  title  = {MyoGen: a modular and extensible
+            simulation toolkit for neurophysiology},
+  author = {Sîmpetru, Raul C. and Molinari,
+            Ricardo G. and {MyoGen contributors}},
+  year   = {2026},
+  doi    = {10.5281/zenodo.18078175},
+  url    = {https://github.com/NsquaredLab/MyoGen}
+}`;
+---
+
+<section id="citation">
+  <div class="container">
+    <div class="section-head">
+      <div class="row">
+        <div>
+          <div class="eyebrow">Citation</div>
+          <h2 class="display">
+            If MyoGen contributed to your work, please cite both.
+          </h2>
+        </div>
+      </div>
+      <p class="lede">
+        Citing both the bioRxiv preprint and the versioned Zenodo software
+        archive attributes the science and pins the exact code release used.
+        Both refs help us keep developing the framework in the open.
+      </p>
+    </div>
+
+    <div class="citation-grid">
+      <div class="bibcard">
+        <div class="head">
+          <span>Preprint · bioRxiv</span><button
+            type="button"
+            class="copy"
+            data-copy-bib>Copy BibTeX</button>
+        </div>
+        <pre set:text={articleBib} />
+      </div>
+      <div class="bibcard">
+        <div class="head">
+          <span>Software · Zenodo</span><button
+            type="button"
+            class="copy"
+            data-copy-bib>Copy BibTeX</button>
+        </div>
+        <pre set:text={softwareBib} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // BibTeX copy buttons
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-copy-bib]");
+    if (!btn) return;
+    const pre = btn.closest(".bibcard")?.querySelector("pre");
+    if (!pre) return;
+    navigator.clipboard
+      .writeText(pre.textContent.trim())
+      .then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "Copied";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove("copied");
+        }, 1600);
+      })
+      .catch(() => {});
+  });
+</script>
+
+<script is:inline>
+  // BibTeX syntax highlighter — tokenizes <pre> inside .bibcard.
+  // Leaves textContent clean so the Copy button still copies plain BibTeX.
+  (function highlightBib() {
+    const esc = (s) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    function tokenize(text) {
+      const tokens = [];
+      let i = 0,
+        n = text.length;
+      while (i < n) {
+        const rest = text.slice(i);
+        let m;
+        if ((m = rest.match(/^@\w+/))) {
+          tokens.push(["type", m[0]]);
+          i += m[0].length;
+          continue;
+        }
+        if ((m = rest.match(/^\d+/))) {
+          tokens.push(["number", m[0]]);
+          i += m[0].length;
+          continue;
+        }
+        if (/[{}=,]/.test(text[i])) {
+          tokens.push(["punct", text[i]]);
+          i++;
+          continue;
+        }
+        if ((m = rest.match(/^\s+/))) {
+          tokens.push(["ws", m[0]]);
+          i += m[0].length;
+          continue;
+        }
+        if ((m = rest.match(/^[A-Za-z][\w_]*/))) {
+          tokens.push(["ident", m[0]]);
+          i += m[0].length;
+          continue;
+        }
+        tokens.push(["text", text[i]]);
+        i++;
+      }
+
+      // Reclassify: ident followed (after optional ws) by '=' is a field name.
+      for (let j = 0; j < tokens.length; j++) {
+        if (tokens[j][0] !== "ident") continue;
+        let k = j + 1;
+        while (k < tokens.length && tokens[k][0] === "ws") k++;
+        if (
+          k < tokens.length &&
+          tokens[k][0] === "punct" &&
+          tokens[k][1] === "="
+        ) {
+          tokens[j] = ["field", tokens[j][1]];
+        }
+      }
+
+      // Reclassify: first ident inside the entry's first '{' is the citation key.
+      let sawType = false,
+        expectKey = false;
+      for (let j = 0; j < tokens.length; j++) {
+        const [t, v] = tokens[j];
+        if (t === "type") {
+          sawType = true;
+          continue;
+        }
+        if (sawType && t === "punct" && v === "{") {
+          expectKey = true;
+          sawType = false;
+          continue;
+        }
+        if (expectKey && t === "ws") continue;
+        if (expectKey && t === "ident") {
+          tokens[j] = ["key", v];
+          expectKey = false;
+          break;
+        }
+        if (expectKey) {
+          expectKey = false;
+        }
+      }
+      return tokens;
+    }
+
+    document.querySelectorAll(".bibcard pre").forEach((pre) => {
+      const text = pre.textContent;
+      const tokens = tokenize(text);
+      pre.innerHTML = tokens
+        .map(([t, v]) => {
+          const e = esc(v);
+          switch (t) {
+            case "type":
+              return '<span class="tk-type">' + e + "</span>";
+            case "key":
+              return '<span class="tk-key">' + e + "</span>";
+            case "field":
+              return '<span class="tk-field">' + e + "</span>";
+            case "punct":
+              return '<span class="tk-punct">' + e + "</span>";
+            case "number":
+              return '<span class="tk-number">' + e + "</span>";
+            default:
+              return e;
+          }
+        })
+        .join("");
+    });
+  })();
+</script>

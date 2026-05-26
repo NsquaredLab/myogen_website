@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import overview from "../assets/myogen_overview.png";
+---
+
+<section id="overview">
+  <div class="container">
+    <div class="section-head">
+      <div class="row">
+        <div>
+          <div class="eyebrow">Overview</div>
+          <h2 class="display">
+            From descending drive to the signal at the electrode.
+          </h2>
+        </div>
+      </div>
+      <p class="lede">
+        MyoGen simulates the sensorimotor loop from descending drive to the
+        signal at the electrode: <span class="kw">NEURON</span> α-motor neurons,
+        Ia / II / Ib afferent pathways with spinal interneurons, muscle
+        spindles and Golgi tendon organs, Hill-type muscle-tendon units, MU
+        territories in a volume conductor, and decomposable surface or
+        intramuscular EMG. Each stage is a standardised <span class="kw">Neo</span
+        > object, swappable, and reproducible.
+      </p>
+    </div>
+
+    <figure class="schematic">
+      <div class="schematic-img">
+        <Image
+          src={overview}
+          loading="lazy"
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1240px) 92vw, 1140px"
+          alt="MyoGen system overview: descending drive (point-process input representing cortical activity) projects onto spinal interneurons and α-motor neurons; α-MNs innervate a Hill-type muscle with distributed motor-unit territories; muscle spindles and Golgi tendon organs return Ia, II, and Ib afferent feedback; surface and intramuscular EMG are generated through a volume conductor."
+        />
+      </div>
+      <figcaption class="schematic-caption">
+        <span
+          ><span class="cap-label">Figure 1</span> &nbsp; MyoGen framework overview.</span
+        >
+        <span
+          >From <a
+            href="https://www.biorxiv.org/content/10.64898/2026.01.01.697284"
+            >Sîmpetru &amp; Molinari et al. (2026), bioRxiv</a
+          ></span
+        >
+      </figcaption>
+    </figure>
+
+    <div class="components-grid">
+      <div class="component">
+        <span class="ctag">Neural</span>
+        <h4>Descending drive → spinal → α-MN</h4>
+        <p>
+          Cortical activity enters as a Poisson or Gamma point-process drive
+          onto spinal interneurons and NEURON α-motor neurons with active
+          dendrites; Ia, II, and Ib afferents close the loop.
+        </p>
+      </div>
+      <div class="component">
+        <span class="ctag">Muscle</span>
+        <h4>Hill-type muscle &amp; territories</h4>
+        <p>
+          Fibre distribution across the muscle CSA, motor-unit territories from
+          a terminal-arborisation model, and Hill-type contractile dynamics.
+        </p>
+      </div>
+      <div class="component">
+        <span class="ctag">Proprioception</span>
+        <h4>Spindles &amp; Golgi tendon organs</h4>
+        <p>
+          Afferent neurons close the loop: spindles report stretch and velocity,
+          Golgi tendon organs report force, both feeding back into the spinal
+          circuit.
+        </p>
+      </div>
+      <div class="component">
+        <span class="ctag">Signal</span>
+        <h4>MUAPs · sEMG · iEMG</h4>
+        <p>
+          Per-fibre MUAPs propagate through the volume conductor to surface
+          grids and intramuscular electrodes, ready for decomposition.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
